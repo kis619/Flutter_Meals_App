@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import './screens/filters_screen.dart';
 import './screens/categories_screen.dart';
 import './screens/category_meals_screen.dart';
 import './screens/meal_detail_screen.dart';
@@ -41,6 +42,8 @@ class MyApp extends StatelessWidget {
               .copyWith(secondary: Colors.deepPurpleAccent)),
       home: const TabsScreen(),
       routes: {
+        TabsScreen.routeName: (ctx) => const TabsScreen(),
+        FiltersScreen.routeName: (ctx) => const FiltersScreen(),
         CategoryMealsScreen.routeName: (ctx) => const CategoryMealsScreen(),
         MealDetailScreen.routeName: (ctx) => const MealDetailScreen(),
       },
