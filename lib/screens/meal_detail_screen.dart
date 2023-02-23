@@ -17,7 +17,7 @@ class MealDetailScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
-            Container(
+            SizedBox(
               height: 300,
               width: double.infinity,
               child: Image.network(
@@ -49,7 +49,7 @@ class MealDetailScreen extends StatelessWidget {
                             leading: CircleAvatar(child: Text('#${i + 1}')),
                             title: Text(meal.steps[i]),
                           ),
-                          Divider(
+                          const Divider(
                             thickness: 2.25,
                             color: Colors.black12,
                           )

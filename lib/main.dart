@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import './screens/categories_screen.dart';
 import './screens/category_meals_screen.dart';
 import './screens/meal_detail_screen.dart';
+import './screens/tabs_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -38,15 +39,15 @@ class MyApp extends StatelessWidget {
               ),
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange)
               .copyWith(secondary: Colors.deepPurpleAccent)),
-      home: const CategoriesScreen(),
+      home: const TabsScreen(),
       routes: {
         CategoryMealsScreen.routeName: (ctx) => const CategoryMealsScreen(),
         MealDetailScreen.routeName: (ctx) => const MealDetailScreen(),
       },
-      onGenerateRoute: (settings) {
-        print(settings.arguments);
-        // return MaterialPageRoute(builder: (ctx) => const CategoriesScreen());
-      },
+      // onGenerateRoute: (settings) {
+      //   // print(settings.arguments);
+      //   // return MaterialPageRoute(builder: (ctx) => const CategoriesScreen());
+      // },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(builder: (ctx) => const CategoriesScreen());
       },
