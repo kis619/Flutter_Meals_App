@@ -28,6 +28,7 @@ class _MyAppState extends State<MyApp> {
   };
 
   List<Meal> _availableMeals = DUMMY_MEALS;
+  List<Meal> _favouriteMeals = [];
 
   void _setFilters(Map<String, bool> filterData) {
     setState(() {
@@ -41,6 +42,25 @@ class _MyAppState extends State<MyApp> {
         return true;
       }).toList();
     });
+  }
+
+  void _toggleFavourite(String mealId) {
+    print("Toggle favourite");
+    final existingIdx = _favouriteMeals.indexWhere((meal) => meal.id == mealId);
+
+    setState(() {
+      if (existingIdx == -1) {
+        _favouriteMeals
+            .add(DUMMY_MEALS.firstWhere((element) => element.id == mealId));
+      } else {
+        _favouriteMeals.removeAt(existingIdx);
+      }
+    });
+  }
+
+  bool _mealIsFavourite(String mealId) {
+    print("MEAL IS FAVOURITE");
+    return _favouriteMeals.any((element) => element.id == mealId);
   }
 
   @override
@@ -70,14 +90,16 @@ class _MyAppState extends State<MyApp> {
               ),
           colorScheme: ColorScheme.fromSwatch(primarySwatch: Colors.orange)
               .copyWith(secondary: Colors.deepPurpleAccent)),
-      home: const TabsScreen(),
+      home: TabsScreen(_favouriteMeals),
       routes: {
-        TabsScreen.routeName: (ctx) => const TabsScreen(),
+        TabsScreen.routeName: (ctx) => TabsScreen(_favouriteMeals),
         FiltersScreen.routeName: (ctx) =>
             FiltersScreen(currentFilters: _filters, saveFilters: _setFilters),
         MealsScreen.routeName: (ctx) =>
             MealsScreen(availableMeals: _availableMeals),
-        MealDetailScreen.routeName: (ctx) => const MealDetailScreen(),
+        MealDetailScreen.routeName: (ctx) =>
+            MealDetailScreen(_toggleFavourite, _mealIsFavourite),
+        // FavouritesScreen.routeName: (ctx) => const FavouritesScreen(),
       },
       // onGenerateRoute: (settings) {
       //   // print(settings.arguments);
