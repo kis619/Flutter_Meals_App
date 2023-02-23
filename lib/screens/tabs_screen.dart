@@ -1,36 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:meals_app/screens/favourites_screen.dart';
 
+import '../screens/favourites_screen.dart';
 import './categories_screen.dart';
 
-class TabsScreen extends StatelessWidget {
+class TabsScreen extends StatefulWidget {
   const TabsScreen({super.key});
 
   @override
+  State<TabsScreen> createState() => _TabsScreenState();
+}
+
+class _TabsScreenState extends State<TabsScreen> {
+  final List<Map<String, Object>> _pages = const [
+    {
+      'page': CategoriesScreen(),
+      'title': 'Categories',
+    },
+    {
+      'page': FavouritesScreen(),
+      'title': 'Favourites',
+    },
+  ];
+
+  int _selectedPageIdx = 0;
+
+  void _selectPage(int i) {
+    setState(() {
+      _selectedPageIdx = i;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      // initialIndex: 1,
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text("Meals"),
-          bottom: const TabBar(
-            indicatorColor: Colors.red,
-            indicatorWeight: 6,
-            tabs: <Widget>[
-              Tab(
-                icon: Icon(Icons.category),
-                text: 'Categories',
-              ),
-              Tab(
-                icon: Icon(Icons.star),
-                text: 'Favourites',
-              )
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_pages[_selectedPageIdx]['title'] as String),
+      ),
+      body: _pages[_selectedPageIdx]['page'] as Widget,
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _selectPage,
+        currentIndex: _selectedPageIdx,
+        backgroundColor: Theme.of(context).primaryColor,
+        unselectedItemColor: Colors.grey,
+        selectedItemColor: Colors.white,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.category),
+            label: 'Categories',
           ),
-        ),
-        body: const TabBarView(
-            children: <Widget>[CategoriesScreen(), FavouritesScreen()]),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.star),
+            label: 'Favourites',
+          )
+        ],
       ),
     );
   }
